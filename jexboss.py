@@ -923,7 +923,9 @@ def main():
                           BOLD + vector + NORMAL + "\" ?\n" +
                           msg_confirm +
                           RED + "   Continue only if you have permission!" + ENDC)
-                    if not sys.stdout.isatty():
+                    if gl_args.safe:
+                        pick = "no"
+                    elif not sys.stdout.isatty():
                         print_and_flush("   yes/NO? ", same_line=True)
                         pick = input().lower() if version_info[0] >= 3 else raw_input().lower()
                     else:
@@ -1064,6 +1066,7 @@ if __name__ == "__main__":
     parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument("--auto-exploit", "-A", help="Send exploit code automatically (USE ONLY IF YOU HAVE PERMISSION!!!)",
                         action='store_true')
+    parser.add_argument("--safe", "-S", help="Do not send any exploit code", action='store_true')
     parser.add_argument("--disable-check-updates", "-D", help="Disable two updates checks: 1) Check for updates "
                         "performed by the webshell in exploited server at http://webshell.jexboss.net/jsp_version.txt and 2) check for updates "
                         "performed by the jexboss client at http://joaomatosf.com/rnp/releases.txt",
