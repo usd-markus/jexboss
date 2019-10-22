@@ -221,8 +221,9 @@ def check_vul(url):
     :return: A dict with the exploit type as the keys, and the HTTP status code as the value
     """
     url_check = parse_url(url)
+    path = str(url_check.path) if url_check.path is not None else ''
     if '443' in str(url_check.port) and url_check.scheme != 'https':
-        url = "https://"+str(url_check.host)+":"+str(url_check.port)+str(url_check.path)
+        url = "https://"+str(url_check.host)+":"+str(url_check.port)+path
 
     print_and_flush(GREEN + "\n ** Checking Host: %s **\n" % url)
     logging.info("Checking Host: %s" % url)
